@@ -62,12 +62,19 @@ llist* llist_foreach(llist* list, void (*func)(int,llist*)) {
 }
 
 llist* llist_head(llist* list) {
-	// TODO
-	return NULL;
+	llist* current = list;
+	while(current->prev != NULL) {
+		current = current->prev;
+	}
+	return current;
 }
 
 llist* llist_end(llist* list) {
-	return llist_foreach(list, NULL);
+	llist* current = list;
+	while(current->next != NULL) {
+		current = current->next;
+	}
+	return current;
 }
 
 llist* llist_insert(llist* list, int pos, int val) {
@@ -77,7 +84,6 @@ llist* llist_insert(llist* list, int pos, int val) {
 	newat->next = oldat;
 	oldat->prev->next = newat;
 	oldat->prev = newat;
-	
 
 	return newat;
 }
