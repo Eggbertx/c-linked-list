@@ -6,7 +6,6 @@ typedef struct llist {
 	struct llist* prev;
 	struct llist* next;
 } llist;
-typedef struct llist llist;
 
 llist* llist_create(int val); /* , llist_type type); */
 

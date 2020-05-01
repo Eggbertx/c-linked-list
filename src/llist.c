@@ -12,16 +12,18 @@ llist* llist_create(int val) {
 }
 
 void llist_destroy(llist* list, int recursive) {
-	if(recursive && list->prev != NULL) {
-		llist_destroy(list->prev, recursive);
-		free(list->prev);
-		list->prev = NULL;
+	llist *tmp = list->next;
+	llist* tmp2;
+	while(tmp && recursive) {
+		tmp2 = tmp;
+		tmp = tmp->next;
+		free(tmp2);
 	}
-
-	if(recursive && list->next != NULL) {
-		llist_destroy(list->next, recursive);
-		free(list->next);
-		list->next = NULL;
+	tmp = list->prev;
+	while(tmp && recursive) {
+		tmp2 = tmp;
+		tmp = tmp->prev;
+		free(tmp2);
 	}
 	free(list);
 }
@@ -69,13 +71,15 @@ llist* llist_end(llist* list) {
 }
 
 llist* llist_insert(llist* list, int pos, int val) {
-	llist* at = llist_at(list, pos);
-	llist* oldnext = at->next;
-	llist* newnext = llist_create(val);
-	newnext->next = oldnext;
-	newnext->prev = at;
-	at->next = newnext;
-	return at->next;
+	llist* oldat = llist_at(list, pos);
+	llist* newat = llist_create(val);
+	newat->prev = oldat->prev;
+	newat->next = oldat;
+	oldat->prev->next = newat;
+	oldat->prev = newat;
+	
+
+	return newat;
 }
 
 llist* llist_push(llist* list, int val) {
