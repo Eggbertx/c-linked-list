@@ -6,7 +6,7 @@ See src/main.c
 
 ## Building/using llist as a shared object
 ```
-make build-list
+make build-lib
 LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH ./llist
 ```
 
